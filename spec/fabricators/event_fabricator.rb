@@ -1,5 +1,5 @@
 Fabricator(:event) do
-  title  "MyString"
+  title  "Capitan Solo birthday"
   date   "2013-06-18"
-  period "MyString"
+  period "year"
 end
