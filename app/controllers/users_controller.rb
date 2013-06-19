@@ -1,15 +1,7 @@
-class UsersController < ApplicationController
-  # GET /users
-  # GET /users.json
-  def index
-    @users = User.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @users }
-    end
-  end
-
+class UsersController < BaseController
+  before_filter :authenticate, :except => [:new, :create]
+  before_filter :authorize_user, :except => [:new, :create]
+    
   # GET /users/1
   # GET /users/1.json
   def show
@@ -44,7 +36,10 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html do
+          session[:user_id] = @user.id
+          redirect_to @user, notice: 'User was successfully created.'
+        end
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }
@@ -80,4 +75,13 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def authorize_user
+    if not current_user == User.find(params[:id])  
+      redirect_to :root 
+    end  
+  end
+
 end

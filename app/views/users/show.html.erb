@@ -1,20 +1,14 @@
-<p id="notice"><%= notice %></p>
+<h2>Данные пользователя</h2>
 
 <p>
-  <b>Email:</b>
+  <b>Электронный адрес:</b>
   <%= @user.email %>
 </p>
 
 <p>
-  <b>Fullname:</b>
+  <b>Имя пользователя:</b>
   <%= @user.fullname %>
 </p>
 
-<p>
-  <b>Password digest:</b>
-  <%= @user.password_digest %>
-</p>
-
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Edit', edit_user_path(@user)  %> |
 <%= link_to 'Back', users_path %>

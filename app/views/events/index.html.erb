@@ -5,16 +5,18 @@
     <th>Title</th>
     <th>Date</th>
     <th>Period</th>
+    <th>User</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
 
 <% @events.each do |event| %>
-  <tr>
+  <tr <%= 'class=not_current_user' if not current_user == event.user %> >
     <td><%= event.title %></td>
     <td><%= event.date %></td>
     <td><%= event.period %></td>
+    <td><%= event.user.fullname %></td>
     <td><%= link_to 'Show', event %></td>
     <td><%= link_to 'Edit', edit_event_path(event) %></td>
     <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -24,4 +26,6 @@
 
 <br />
 
+<%= check_box_tag "current_user_events" %>
+<%= label_tag "current_user_events", "Show only my events" %>
 <%= link_to 'New Event', new_event_path %>

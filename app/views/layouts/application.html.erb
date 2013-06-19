@@ -1,14 +1,59 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>MyHappyDay</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<!doctype html>
+<!--[if lt IE 7 ]> <html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]> <html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]> <html class="ie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]> <html class="ie ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html lang="en"><!--<![endif]-->
 
-<%= yield %>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <title>Mfk</title>
+  </head>
 
-</body>
+  <header>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <div class="nav-collapse collapse">
+            <% if current_user -%>
+              <p class="navbar-text pull-left">
+                <%= link_to "Calendar", events_path %>
+              </p>
+              <p class="navbar-text pull-right">
+                <%= link_to "Выйти", logout_url %>
+              </p>
+              <p class="navbar-text pull-right">
+                Вы вошли как: <%= link_to current_user.fullname, user_path(current_user) %>
+              </p>
+            <% end -%>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span8">
+          <% flash.each do |key, value| %>
+            <%= content_tag :div, class: "alert alert-#{key}" do -%>
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <%= value %>
+            <% end -%>
+          <% end %>
+          <%= yield  %>
+        </div>
+      </div>
+      <%# <div class="row"> %>
+      <%#   <%= debug(params) if Rails.env.development? %1> %>
+      <%#   <%= debug(flash) if Rails.env.development? %1> %>
+      <%#   <%= debug(session) if Rails.env.development? %1> %>
+      <%# </div> %>
+    </div>
+  </body>
+
 </html>

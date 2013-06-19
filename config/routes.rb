@@ -1,9 +1,13 @@
 MyHappyDay::Application.routes.draw do
-  resources :users
 
+  get "login" => "sessions#new", :as => "login"
+  get "logout" => "sessions#destroy", :as => "logout"  
+
+  root :to => "events#index"
 
   resources :events
-
+  resources :users, :except => [:index]
+  resources :sessions
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

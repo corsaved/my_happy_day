@@ -1,4 +1,7 @@
-class EventsController < ApplicationController
+class EventsController < BaseController
+  before_filter :authenticate
+  before_filter :authorize_event, :only => [:edit, :update, :destroy]
+
   # GET /events
   # GET /events.json
   def index
@@ -41,7 +44,8 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     @event = Event.new(params[:event])
-
+    @event.user = current_user
+    
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
@@ -80,4 +84,13 @@ class EventsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+
+  def authorize_event
+    if not current_user == Event.find(params[:id]).user  
+      redirect_to :root 
+    end  
+  end
+
 end
