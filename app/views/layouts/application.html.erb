@@ -7,10 +7,10 @@
 
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
-    <title>Mfk</title>
+    <title>My happy day</title>
   </head>
 
   <header>
@@ -23,10 +23,10 @@
                 <%= link_to "Calendar", events_path %>
               </p>
               <p class="navbar-text pull-right">
-                <%= link_to "Выйти", logout_url %>
+                <%= link_to "Logout", logout_path %>
               </p>
               <p class="navbar-text pull-right">
-                Вы вошли как: <%= link_to current_user.fullname, user_path(current_user) %>
+              <%= link_to "Logged in as: #{current_user.email}", edit_user_path(current_user) %>
               </p>
             <% end -%>
           </div>
@@ -48,11 +48,6 @@
           <%= yield  %>
         </div>
       </div>
-      <%# <div class="row"> %>
-      <%#   <%= debug(params) if Rails.env.development? %1> %>
-      <%#   <%= debug(flash) if Rails.env.development? %1> %>
-      <%#   <%= debug(session) if Rails.env.development? %1> %>
-      <%# </div> %>
     </div>
   </body>
 

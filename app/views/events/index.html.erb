@@ -18,33 +18,9 @@
     <% end %>
   <% end %>
 </div>
-
-<%# <table> %>
-<%#   <tr> %>
-<%#     <th>Title</th> %>
-<%#     <th>Date</th> %>
-<%#     <th>Period</th> %>
-<%#     <th>User</th> %>
-<%#     <th></th> %>
-<%#     <th></th> %>
-<%#     <th></th> %>
-<%#   </tr> %>
-
-<%# <% @events.each do |event| %1> %>
-<%#   <tr <%= 'class=not_current_user' if not current_user == event.user %1> > %>
-<%#     <td><%= event.title %1></td> %>
-<%#     <td><%= event.date %1></td> %>
-<%#     <td><%= event.period %1></td> %>
-<%#     <td><%= event.user.fullname %1></td> %>
-<%#     <td><%= link_to 'Show', event %1></td> %>
-<%#     <td><%= link_to 'Edit', edit_event_path(event) %1></td> %>
-<%#     <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %1></td> %>
-<%#   </tr> %>
-<%# <% end %1> %>
-<%# </table> %>
-
-<%# <br /> %>
-
+<br>
 <%= check_box_tag "current_user_events" %>
-<%= label_tag "current_user_events", "Show only my events" %>
-<%= link_to 'New Event', new_event_path %>
+<%= label_tag "current_user_events", "Show only my events" , :class => "checkbox inline" %>
+<br>
+<br>
+<%= link_to 'New Event', new_event_path, :class => 'btn btn-primary btn-large' %>

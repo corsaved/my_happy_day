@@ -7,6 +7,14 @@ body {
   padding: 9px 0;
 }
 
+.navbar-text {
+  margin-right: 5px;
+}
+
+.navbar-text a {
+  color: #999;
+}
+
 // Styles for calendar
 #events .calendar {
   border-collapse: collapse;

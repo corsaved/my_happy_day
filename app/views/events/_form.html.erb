@@ -1,45 +1,73 @@
-<%= form_tag @event, :method => @method %>
+<%= form_tag @event, :method => @method, :class => "form-horizontal" %>
 
 <% if @event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h2>
-
-      <ul>
+  <div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <ul>
       <% @event.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= label_tag :event_title, "Title" %>
-    <%= text_field_tag :event_title, @event.title %>
+    </ul>
   </div>
-  <div class="field">
-    <%= label_tag :event_date %>
-    <%= text_field_tag :event_date, @begin_date, :class => 'date' %>
+<% end %>
+
+  <div class="control-group">
+    <%= label_tag :event_title, "Title", :class => "control-label" %>
+    <div class="controls">
+      <%= text_field_tag :event_title, @event.title, :placeholder => "email" %>
+    </div>  
+  </div>
+
+  <div class="control-group">
+    <%= label_tag :event_date, nil, :class => "control-label" %>
+    <div class="controls">
+      <%= text_field_tag :event_date, @begin_date, :class => 'date', :placeholder => "event date" %>
+    </div>
   </div>
   
-  <%= check_box_tag "recurring_event", nil, @event.recurring %>
-  <%= label_tag "recurring_event", "Repeat this event" %>
-
-  <div class="period">
-    <%= radio_button_tag 'period', 'day', @event.period == 'day' %>
-    <%= label_tag "period_day", "every day" %>
-    <%= radio_button_tag 'period', 'week', @event.period == 'week' %>
-    <%= label_tag "period_week", "every week" %>
-    <%= radio_button_tag 'period', 'month', @event.period == 'month' %>
-    <%= label_tag "period_month", "every month" %>
-    <%= radio_button_tag 'period', 'year', @event.period == 'year' %>
-    <%= label_tag "period_year", "every year" %>
-
-    <div class="field">
-      <%= label_tag :event_end_date %>
-      <%= text_field_tag :event_end_date, @end_date, :class => 'date' %>
+  <div class="control-group">
+    <%= label_tag "recurring_event", "Repeat this event", :class => "control-label" %>
+    <div class="controls">
+      <%= check_box_tag "recurring_event", nil, @event.recurring %>
     </div>
   </div>
 
-  <div class="actions">
-    <%= submit_tag %>
+  <div class="period">
+    <div class="control-group">
+      <%= label_tag "period_day", "every day", :class => "control-label" %>
+      <div class="controls">
+        <%= radio_button_tag 'period', 'day', @event.period == 'day' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= label_tag "period_week", "every week", :class => "control-label" %>
+      <div class="controls">
+        <%= radio_button_tag 'period', 'week', @event.period == 'week' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= label_tag "period_month", "every month", :class => "control-label" %>
+      <div class="controls">
+        <%= radio_button_tag 'period', 'month', @event.period == 'month' %>
+      </div>
+    </div>
+    <div class="control-group">
+      <%= label_tag "period_year", "every year", :class => "control-label" %>
+      <div class="controls">
+        <%= radio_button_tag 'period', 'year', @event.period == 'year' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= label_tag :event_end_date, nil, :class => "control-label" %>
+      <div class="controls">
+        <%= text_field_tag :event_end_date, @end_date, :class => 'date' , :placeholder => "event date end" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= link_to "Cancel", :root, :class => 'btn' %>
+    or 
+    <%= submit_tag("Save", :class => 'btn btn-primary')  %>
   </div>

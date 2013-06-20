@@ -3,7 +3,7 @@ class SessionsController < BaseController
     user = User.find_by_email(params[:email])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to "/events", :flash => { :success => "Logged in!" }
+      redirect_to :root, :flash => { :success => "Logged in!" }
     else
       flash[:error] = "Invalid email or password"
       render action: "new"
@@ -12,6 +12,6 @@ class SessionsController < BaseController
 
   def destroy
     session[:user_id] = nil
-    redirect_to "/events", :flash => { :success => "Logged out!" }
+    redirect_to login_path, :flash => { :success => "Logged out!" }
   end
 end

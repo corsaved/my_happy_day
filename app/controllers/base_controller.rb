@@ -8,7 +8,7 @@ class BaseController < ApplicationController
   
   def authenticate
     if not current_user 
-      redirect_to login_url 
+      redirect_to login_path, :flash => { :error => "You do not have permissions to this action" }
     end  
   end
 
