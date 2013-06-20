@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(:version => 20130618201927) do
 
   create_table "events", :force => true do |t|
     t.string   "title"
-    t.string   "date"
+    t.text     "date"
     t.boolean  "recurring"
     t.string   "period"
     t.datetime "created_at", :null => false
