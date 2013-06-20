@@ -1,30 +1,49 @@
-<h1>Listing events</h1>
+<div id="events">
+  <h2 id="month">
+    <%= link_to "<", date: @date.prev_month %>
+    <%= @date.strftime("%B %Y") %>
+    <%= link_to ">", date: @date.next_month %>
+  </h2>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Date</th>
-    <th>Period</th>
-    <th>User</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+  <%= calendar @date do |date| %>
+    <%= date.day %>
+    <% if @events_by_date[date] %>
+    <ul>
+      <% @events_by_date[date].each do |event| %>
+        <li <%= 'class=not_current_user' if not current_user == event.user %> >
+          <%= link_to event.title, edit_event_path(event) %>
+        </li>
+      <% end %>
+    </ul>
+    <% end %>
+  <% end %>
+</div>
 
-<% @events.each do |event| %>
-  <tr <%= 'class=not_current_user' if not current_user == event.user %> >
-    <td><%= event.title %></td>
-    <td><%= event.date %></td>
-    <td><%= event.period %></td>
-    <td><%= event.user.fullname %></td>
-    <td><%= link_to 'Show', event %></td>
-    <td><%= link_to 'Edit', edit_event_path(event) %></td>
-    <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+<%# <table> %>
+<%#   <tr> %>
+<%#     <th>Title</th> %>
+<%#     <th>Date</th> %>
+<%#     <th>Period</th> %>
+<%#     <th>User</th> %>
+<%#     <th></th> %>
+<%#     <th></th> %>
+<%#     <th></th> %>
+<%#   </tr> %>
 
-<br />
+<%# <% @events.each do |event| %1> %>
+<%#   <tr <%= 'class=not_current_user' if not current_user == event.user %1> > %>
+<%#     <td><%= event.title %1></td> %>
+<%#     <td><%= event.date %1></td> %>
+<%#     <td><%= event.period %1></td> %>
+<%#     <td><%= event.user.fullname %1></td> %>
+<%#     <td><%= link_to 'Show', event %1></td> %>
+<%#     <td><%= link_to 'Edit', edit_event_path(event) %1></td> %>
+<%#     <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %1></td> %>
+<%#   </tr> %>
+<%# <% end %1> %>
+<%# </table> %>
+
+<%# <br /> %>
 
 <%= check_box_tag "current_user_events" %>
 <%= label_tag "current_user_events", "Show only my events" %>

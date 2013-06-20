@@ -6,6 +6,14 @@ class EventsController < BaseController
   # GET /events.json
   def index
     @events = Event.all
+    @events_by_date = {}
+    range_to_show.each do |day|
+      @events_by_date[day] = []
+      @events.each do |event|
+        @events_by_date[day] << event if YAML.load(event.date).include? day
+      end
+    end  
+    @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,14 +23,14 @@ class EventsController < BaseController
 
   # GET /events/1
   # GET /events/1.json
-  def show
-    @event = Event.find(params[:id])
+  # def show
+  #   @event = Event.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @event }
-    end
-  end
+  #   respond_to do |format|
+  #     format.html # show.html.erb
+  #     format.json { render json: @event }
+  #   end
+  # end
 
   # GET /events/new
   # GET /events/new.json
@@ -38,17 +46,19 @@ class EventsController < BaseController
   # GET /events/1/edit
   def edit
     @event = Event.find(params[:id])
+    @method = :put
+    @begin_date = YAML.load(@event.date).first.to_s
+    @end_date = YAML.load(@event.date).last.to_s
   end
 
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(params[:event])
-    @event.user = current_user
-    
+    @event = Event.new(event_attributes)
+
     respond_to do |format|
       if @event.save
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
+        format.html { redirect_to events_path, notice: 'Event was successfully created.' }
         format.json { render json: @event, status: :created, location: @event }
       else
         format.html { render action: "new" }
@@ -63,8 +73,8 @@ class EventsController < BaseController
     @event = Event.find(params[:id])
 
     respond_to do |format|
-      if @event.update_attributes(params[:event])
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+      if @event.update_attributes(event_attributes)
+        format.html { redirect_to events_path, notice: 'Event was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -93,4 +103,38 @@ class EventsController < BaseController
     end  
   end
 
+  def range_to_show 
+    date = params[:date] ? Date.parse(params[:date]) : Date.today
+    first = date.beginning_of_month.beginning_of_week(:monday)
+    last = date.end_of_month.end_of_week(:monday)
+    (first..last).to_a
+  end
+
+  def event_attributes
+    event_title = params[:event_title]
+    event_date = params[:event_date].to_date
+    event_end_date = params[:event_end_date].to_date
+    recurring_event = params[:recurring_event]
+    period = params[:period]
+
+    event_ocassions_date = []
+    next_ocassion = "next_#{period}"
+    if not recurring_event 
+      event_ocassions_date << event_date
+    else
+      until event_date > event_end_date do
+        event_ocassions_date << event_date
+        event_date = event_date.send(next_ocassion)
+      end
+    end  
+    event_ocassions_date_in_yaml = event_ocassions_date.to_yaml
+
+    result = { :title => event_title,
+               :user => current_user,
+               :date => event_ocassions_date_in_yaml,
+               :recurring => recurring_event,
+               :period => period  
+              }
+
+  end  
 end
