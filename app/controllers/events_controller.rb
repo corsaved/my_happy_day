@@ -43,11 +43,11 @@ class EventsController < BaseController
       end
   end
 
-  def destroy
-    @event = Event.find(params[:id])
-    @event.destroy
-    redirect_to events_url, :flash => { :success => "Event was succesfully deleted" }
-  end
+  # def destroy
+  #   @event = Event.find(params[:id])
+  #   @event.destroy
+  #   redirect_to events_url, :flash => { :success => "Event was succesfully deleted" }
+  # end
 
   private
 

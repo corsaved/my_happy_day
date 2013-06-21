@@ -16,7 +16,8 @@ describe "users/edit" do
     assert_select "form[action=?][method=?]", user_path(@user), "post" do
       assert_select "input#user_email[name=?]", "user[email]"
       assert_select "input#user_fullname[name=?]", "user[fullname]"
-      assert_select "input#user_password_digest[name=?]", "user[password_digest]"
+      assert_select "input#user_password[name=?]", "user[password]"
+      assert_select "input#user_password_confirmation[name=?]", "user[password_confirmation]"
     end
   end
 end

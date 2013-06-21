@@ -29,11 +29,11 @@ class UsersController < BaseController
     end
   end
 
-  def destroy
-    @user = User.find(params[:id])
-    @user.destroy
-    redirect_to :root , :flash => { :success => "User was successfully deleted" } 
-  end
+  # def destroy
+  #   @user = User.find(params[:id])
+  #   @user.destroy
+  #   redirect_to :root , :flash => { :success => "User was successfully deleted" } 
+  # end
 
   private
 

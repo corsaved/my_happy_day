@@ -13,8 +13,8 @@ describe "events/edit" do
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "form[action=?][method=?]", event_path(@event), "post" do
-      assert_select "input#event_title[name=?]", "event[title]"
-      assert_select "input#event_period[name=?]", "event[period]"
+      assert_select "input#event_title[name=?]", "event_title"
+      assert_select "input#event_date[name=?]", "event_date"
     end
   end
 end

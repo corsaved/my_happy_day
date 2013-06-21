@@ -11,10 +11,6 @@ describe EventsController do
       get("/events/new").should route_to("events#new")
     end
 
-    it "routes to #show" do
-      get("/events/1").should route_to("events#show", :id => "1")
-    end
-
     it "routes to #edit" do
       get("/events/1/edit").should route_to("events#edit", :id => "1")
     end
@@ -26,10 +22,6 @@ describe EventsController do
     it "routes to #update" do
       put("/events/1").should route_to("events#update", :id => "1")
     end
-
-    it "routes to #destroy" do
-      delete("/events/1").should route_to("events#destroy", :id => "1")
-    end
-
+  
   end
 end
