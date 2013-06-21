@@ -19,4 +19,4 @@ describe User do
     before { user.password_digest = "" }
     it { should_not be_valid }
   end
-end
+end 

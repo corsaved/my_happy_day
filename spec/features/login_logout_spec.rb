@@ -2,8 +2,8 @@
 require "spec_helper"
 
 feature "Log in and log out" do
-  # # As a registered user
-  # # In order to get additional abilities
+  # As a registered user
+  # In order to access calendar
   # I want to log in to the site
   scenario "Registered user log in (success)" do
     Fabricate(:user, fullname: "Haul", email: "lofdur@gmail.com", password: "q1w2e3")
@@ -12,8 +12,8 @@ feature "Log in and log out" do
 
     fill_in "email", :with => "lofdur@gmail.com"
     fill_in "password", :with => "q1w2e3"
-    click_button "Войти"
-
+    click_button "Log in"
+ 
     page.should have_content "Logged in!"
   end
 
@@ -24,7 +24,7 @@ feature "Log in and log out" do
 
     fill_in "email", :with => "lofdur@gmail.com"
     fill_in "password", :with => "q1w2sdfsdf"
-    click_button "Войти"
+    click_button "Log in"
 
     page.should have_content "Invalid email or password"
   end
