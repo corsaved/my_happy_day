@@ -19,16 +19,16 @@
   </div>
 
   <div class="control-group">
-    <%= label_tag :event_date, nil, :class => "control-label" %>
+    <%= label_tag :event_start_date, nil, :class => "control-label" %>
     <div class="controls">
-      <%= text_field_tag :event_date, @begin_date, :class => 'date', :placeholder => "event date" %>
+      <%= text_field_tag :event_start_date, @begin_date, :class => 'date', :placeholder => "event start date" %>
     </div>
   </div>
   
   <div class="control-group">
     <%= label_tag "recurring_event", "Repeat this event", :class => "control-label" %>
     <div class="controls">
-      <%= check_box_tag "recurring_event", nil, @event.recurring %>
+      <%= check_box_tag "recurring_event", nil, @recurring %>
     </div>
   </div>
 
@@ -36,25 +36,25 @@
     <div class="control-group">
       <%= label_tag "period_day", "every day", :class => "control-label" %>
       <div class="controls">
-        <%= radio_button_tag 'period', 'day', @event.period == 'day' %>
+        <%= radio_button_tag 'period', 'daily', @period == 'daily' %>
       </div>
     </div>
     <div class="control-group">
       <%= label_tag "period_week", "every week", :class => "control-label" %>
       <div class="controls">
-        <%= radio_button_tag 'period', 'week', @event.period == 'week' %>
+        <%= radio_button_tag 'period', 'weekly', @period == 'weekly' %>
       </div>
     </div>
     <div class="control-group">
       <%= label_tag "period_month", "every month", :class => "control-label" %>
       <div class="controls">
-        <%= radio_button_tag 'period', 'month', @event.period == 'month' %>
+        <%= radio_button_tag 'period', 'monthly', @period == 'monthly' %>
       </div>
     </div>
     <div class="control-group">
       <%= label_tag "period_year", "every year", :class => "control-label" %>
       <div class="controls">
-        <%= radio_button_tag 'period', 'year', @event.period == 'year' %>
+        <%= radio_button_tag 'period', 'yearly', @period == 'yearly' %>
       </div>
     </div>
 

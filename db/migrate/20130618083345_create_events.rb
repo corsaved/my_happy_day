@@ -2,9 +2,7 @@ class CreateEvents < ActiveRecord::Migration
   def change
     create_table :events do |t|
       t.string :title
-      t.text :date
-      t.boolean :recurring
-      t.string :period
+      t.text :schedule
 
       t.timestamps
     end

@@ -8,7 +8,7 @@ class EventsController < BaseController
     range_to_show.each do |day|
       @events_by_date[day] = []
       @events.each do |event|
-        @events_by_date[day] << event if YAML.load(event.date).include? day
+        @events_by_date[day] << event if IceCube::Schedule.from_yaml(event.schedule).occurs_on? day
       end
     end  
     @date = params[:date] ? Date.parse(params[:date]) : Date.today
@@ -21,22 +21,30 @@ class EventsController < BaseController
   def edit
     @event = Event.find(params[:id])
     @method = :put
-    @begin_date = YAML.load(@event.date).first.to_s
-    @end_date = YAML.load(@event.date).last.to_s
+    schedule  = IceCube::Schedule.from_yaml(@event.schedule)
+    @begin_date = schedule.start_date 
+    @end_date = schedule.end_date
+    @recurring = true
+    @period = "daily"
   end
 
   def create
-    @event = Event.new(event_attributes)
-      if @event.save
-        redirect_to events_path, :flash => { :success => "Event was succesfully created" }
-      else
-        render action: "new"
-      end
+    @event = Event.new
+    @event.title = params[:event_title]
+    @event.user = current_user
+    @event.init_schedule(params)
+    if @event.save
+      redirect_to events_path, :flash => { :success => "Event was succesfully created" }
+    else
+      render action: "new" 
+    end
   end
 
   def update
     @event = Event.find(params[:id])
-      if @event.update_attributes(event_attributes)
+    @event.title = params[:event_title]
+    @event.init_schedule(params)
+      if @event.save
         redirect_to events_path, :flash => { :success => "Event was succesfully updated" }
       else
         render action: "edit"
@@ -63,31 +71,4 @@ class EventsController < BaseController
     last = date.end_of_month.end_of_week(:monday)
     (first..last).to_a
   end
-
-  def event_attributes
-    event_title = params[:event_title]
-    event_date = params[:event_date].to_date
-    event_end_date = params[:event_end_date].to_date
-    recurring_event = params[:recurring_event]
-    period = params[:period]
-
-    event_ocassions_date = []
-    next_ocassion = "next_#{period}"
-    if not recurring_event 
-      event_ocassions_date << event_date
-    else
-      until event_date > event_end_date do
-        event_ocassions_date << event_date
-        event_date = event_date.send(next_ocassion)
-      end
-    end  
-    event_ocassions_date_in_yaml = event_ocassions_date.to_yaml
-
-    result = { :title => event_title,
-               :user => current_user,
-               :date => event_ocassions_date_in_yaml,
-               :recurring => recurring_event,
-               :period => period  
-              }
-  end  
 end
