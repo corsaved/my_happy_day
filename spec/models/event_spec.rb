@@ -5,19 +5,21 @@ describe Event do
   subject { event }
 
   it { should respond_to(:title) } 
-  it { should respond_to(:date) } 
-  it { should respond_to(:period) }
+  it { should respond_to(:schedule) }  
+  it { should respond_to(:init_schedule) } 
 
-  it { should be_valid }
+  it { should be_valid } 
   
   describe "when title is not present" do
     before { event.title = "" }
     it {should_not be_valid}
   end
   
-  describe "when date is not present" do
-    before { event.date = nil }
+  describe "when schedule is not present" do
+    before { event.schedule = nil }
     it {should_not be_valid}
   end
 
+  describe "#init_schedule" do
+  end
 end

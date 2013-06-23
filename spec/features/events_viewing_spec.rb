@@ -8,9 +8,9 @@ feature "Events viewing:" do
     user_alex = Fabricate(:user, fullname: "Alex", email: "alex@example.com", password: "q1w2e3") 
     user_john = Fabricate(:user, fullname: "JonnyMnemonic", email: "neo@matrix.com", password_digest: "anystring") 
   
-    Fabricate(:event, title: "ruby monks", date: Array.new([Date.today]).to_yaml, user: user_alex) 
-    Fabricate(:event, title: "ruby rogues", date: Array.new([Date.yesterday]).to_yaml, user: user_john) 
-    Fabricate(:event, title: "no name podcast", date: Array.new([Date.today.next_month]).to_yaml) 
+    Fabricate(:event, title: "ruby monks", schedule: IceCube::Schedule.new.to_yaml, user: user_alex) 
+    Fabricate(:event, title: "ruby rogues", schedule: IceCube::Schedule.new.to_yaml, user: user_john) 
+    Fabricate(:event, title: "no name podcast", schedule: IceCube::Schedule.new(Date.today + 30).to_yaml) 
     
     visit "/login"
 
@@ -52,4 +52,4 @@ feature "Events viewing:" do
 
     page.should have_content "no name podcast"
   end
-end
+end 
