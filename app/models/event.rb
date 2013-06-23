@@ -12,7 +12,7 @@ class Event < ActiveRecord::Base
     period = params[:period]
 
     if recurring_event
-      schedule = IceCube::Schedule.new(event_start_date) do |s|
+      schedule = IceCube::Schedule.new( event_start_date, :end_time => event_end_date ) do |s|
         s.add_recurrence_rule IceCube::Rule.send(period).until(event_end_date) 
       end
     else
