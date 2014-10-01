@@ -1,11 +1,9 @@
 class Event < ActiveRecord::Base
-  attr_accessible :schedule, :title, :user
-
   validates :title, :schedule, presence: true
 
   belongs_to :user
 
-  def init_schedule(params) 
+  def init_schedule(params)
     event_start_date = params[:event_start_date].to_date
     event_end_date = params[:event_end_date].to_date
     recurring_event = params[:recurring_event]
@@ -13,12 +11,12 @@ class Event < ActiveRecord::Base
 
     if recurring_event
       schedule = IceCube::Schedule.new( event_start_date, :end_time => event_end_date ) do |s|
-        s.add_recurrence_rule IceCube::Rule.send(period).until(event_end_date) 
+        s.add_recurrence_rule IceCube::Rule.send(period).until(event_end_date)
       end
     else
-      schedule = IceCube::Schedule.new(event_start_date) 
-    end 
+      schedule = IceCube::Schedule.new(event_start_date)
+    end
 
     self.schedule = schedule.to_yaml
-  end  
+  end
 end

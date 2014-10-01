@@ -15,6 +15,3 @@
 /tmp
 *.swp
 *~
-
-# Ignore SimpleCov result files
-coverage 
