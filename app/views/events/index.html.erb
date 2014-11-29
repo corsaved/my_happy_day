@@ -1,26 +1,49 @@
 <div id="events">
-  <h2 id="month">
-    <%= link_to "<", date: @date.prev_month %>
-    <%= @date.strftime("%B %Y") %>
-    <%= link_to ">", date: @date.next_month %>
-  </h2>
+  <div class="row">
+    <div class="span3 text-center">
+      <div class="row">
+        <h3>All events</h3>
+          <ul>
+            <% @events.each do |event| %>
+              <li>
+                <div class="span1">
+                  <%= link_to event.title, edit_event_path(event) %>
+                </div>
+                <%= render 'recurring_scheduler/schedulers/scheduler_link', scheduler: event.scheduler, schedulable: event %>
+              </li>
+            <% end %>
+          </ul>
+      </div>
 
-  <%= calendar @date do |date| %>
-    <%= date.day %>
-    <% if @events_by_date[date] %>
-    <ul>
-      <% @events_by_date[date].each do |event| %>
-        <li <%= 'class=not_current_user' if not current_user == event.user %> >
-          <%= link_to event.title, edit_event_path(event) %>
-        </li>
+      <div class="row">
+        <%= check_box_tag "current_user_events" %>
+        <%= label_tag "current_user_events", "Show only my events" , :class => "checkbox inline" %>
+      </div>
+      <br />
+      <div class="row">
+        <%= link_to 'New Event', new_event_path, :class => 'btn btn-primary btn-large' %>
+      </div>
+    </div>
+
+    <div class="span9">
+      <h2 id="month">
+        <%= link_to "<", date: @date.prev_month %>
+        <%= @date.strftime("%B %Y") %>
+        <%= link_to ">", date: @date.next_month %>
+      </h2>
+
+      <%= calendar @date do |date| %>
+        <%= date.day %>
+        <% if @events_by_date[date] %>
+        <ul>
+          <% @events_by_date[date].each do |event| %>
+            <li <%= 'class=not_current_user' if not current_user == event.user %> >
+              <%= link_to event.title, edit_event_path(event) %>
+            </li>
+          <% end %>
+        </ul>
+        <% end %>
       <% end %>
-    </ul>
-    <% end %>
-  <% end %>
+    </div>
+  </div>
 </div>
-<br>
-<%= check_box_tag "current_user_events" %>
-<%= label_tag "current_user_events", "Show only my events" , :class => "checkbox inline" %>
-<br>
-<br>
-<%= link_to 'New Event', new_event_path, :class => 'btn btn-primary btn-large' %>

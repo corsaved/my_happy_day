@@ -10,6 +10,7 @@ gem 'sass-rails',   '~> 4.0'
 gem 'coffee-rails', '~> 4.0'
 gem 'therubyracer', platforms: :ruby
 gem 'uglifier', '>= 1.0.3'
+gem 'slim'
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'

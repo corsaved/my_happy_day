@@ -1,3 +1,7 @@
 <h1>Editing event</h1>
 
 <%= render 'form' %>
+
+<%= render 'recurring_scheduler/schedulers/schedule_in_words', scheduler: @event.scheduler %>
+<%= render 'recurring_scheduler/schedulers/scheduler_link', scheduler: @event.scheduler, schedulable: @event %>
+

@@ -12,4 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require recurring_scheduler/recurring_scheduler
+//= require jquery.datetimepicker
 //= require_tree .
