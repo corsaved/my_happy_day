@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 
-#gem update bundler
 gem 'rails', '3.2.13'
 gem 'pg'
 gem 'ice_cube'
-#gem 'json', '1.8.0'
+
 
 
 group :development do
