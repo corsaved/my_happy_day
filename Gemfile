@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem update bundler
 gem 'rails', '3.2.13'
 gem 'pg'
 gem 'ice_cube'
@@ -36,4 +37,3 @@ gem 'jquery-ui-rails'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'
-gem update bundler
