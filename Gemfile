@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem bundler upgrade
+
 gem 'rails', '3.2.13'
 gem 'pg'
 gem 'ice_cube'
